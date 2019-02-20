@@ -1,0 +1,125 @@
+@import 'bootstrap/scss/bootstrap.scss';
+
+$color-title: #282930;
+$color-label: #363b57;
+$green: #7bc411;
+$red: #ff0000;
+$blue: #349ba5;
+
+
+body {
+    background: url('img/IMG_0193_filtr_krycie.jpg') left bottom no-repeat;
+    background-size: cover;
+
+    .container {
+        background-color: rgba(217, 217, 217, 0.7);
+        margin: 4rem auto;
+        padding: 3rem 4rem;
+        -webkit-box-shadow: inset 16px -16px 13px -2px rgba(200,200,200,1), inset -16px 16px 13px -2px rgba(200,200,200,1);
+        -moz-box-shadow: inset 16px -16px 13px -2px rgba(200,200,200,1), inset -16px 16px 13px -2px rgba(200,200,200,1);
+        box-shadow: inset 16px -16px 13px -2px rgba(200,200,200,1), inset -16px 16px 13px -2px rgba(200,200,200,1);
+        border-radius: 20px;
+
+        h1 {
+            text-align: center;
+            padding: 2rem;
+            color: $color-title;
+        }
+
+        section {
+            padding-bottom: 4rem;
+
+
+            h3 {
+                padding-bottom: 1rem;
+                color: $color-title;
+            }
+
+            h5 {
+                margin-bottom: 0.2rem;
+            }
+
+            label {
+                color: $color-label;
+            }
+
+            input:not([type='file']) {
+                border: 2px solid transparent;
+
+                &:focus {
+                    border-color: $blue;
+                    outline: none;
+                    box-shadow: none;
+                }
+
+                &.warning {
+                    border-color: $red;
+                }
+
+                &.valid {
+                    border-color: $green;
+                }
+            }
+
+            .file-upload-label {
+                margin-bottom: 0.5rem;
+            }
+
+
+            .file-upload-button {
+
+                input[type='file'] {
+                    width: 0.1px;
+                    height: 0.1px;
+                    opacity: 0;
+                    overflow: hidden;
+                    position: absolute;
+                    z-index: -1;
+                }
+
+                padding: 0.5rem 1rem;
+                background-color: $blue;
+                color: #fff;
+                border-radius: 3px;
+                display: inline-block;
+                cursor: pointer;
+
+
+                &.warning {
+                    background-color: $red;
+                }
+
+                &.valid {
+                    background-color: $green;
+                }
+
+                &:hover {
+                    background-color: lighten($blue, 15%);
+                }
+            }
+
+            small {
+                height: 1.1rem;
+                display: block;
+                line-height: 1.2em;
+                padding-left: 5px;
+
+                &.warning {
+                    color: $red;
+                }
+            }
+
+            h5 + small {
+                padding-left: 0;
+                padding-bottom: 2em;
+            }
+        }
+
+        button {
+            padding: 1rem 3rem;
+            border: none;
+            background-color: $green;
+            color: #fff;
+        }
+    }
+}

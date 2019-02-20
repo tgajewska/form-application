@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width initial-scale=1 shrink-to-fit=no" />
+    <title>Application form</title>
+</head>
+<body>
+    <main class="container">
+        <h1>Application form</h1>
+        <form novalidate>
+            <section>
+                <h3>Personal information</h3>
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" class="form-control" pattern="^[a-zA-ZęóąśżźćńŚŻŹĆŃ\s/-]{2,}$" required />
+                        <small data-warning='Please, enter valid name.' data-accept='Thank you for entering your name!'></small>
+                    </div>
+                    <div class="col">
+                        <label for="surname">Surname:</label>
+                        <input type="text" id="surname" class="form-control" pattern="^[a-zA-ZęóąśżźćńŚŻŹĆŃ\s/-]{2,}$" required />
+                        <small data-warning='Please, enter valid surname.' data-accept='Thank you for entering your surname!'></small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="birthday">Date of birth:</label>
+                        <input type="date" id="birthday" class="form-control" min="1900-01-01" required />
+                        <small data-warning='Remember, you have to be 18 years old minimum' data-accept='Thank you for entering your age!'></small>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="file-upload-label">Please, load the scan of your id card:</p>
+                        <label class="file-upload-button">Choose your file<input type="file" id="idCard" name="idCard" value="jjj" required /></label>
+                        <small data-warning='File not loaded' data-accept='Thank you for loading file!'></small>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h3>Address:</h3>
+                <div class="row">
+
+                    <div class="form-group col">
+                        <label for="street">Street</label>
+                        <input type="text" id="street" class="form-control" pattern="^[a-zA-ZęóąśżźćńŚŻŹĆŃ\s/-]{2,}$" required />
+                        <small data-warning='Please, enter your valid street name.' data-accept='Thank you for entering your street name!'></small>
+                    </div>
+
+
+                    <div class="form-group col">
+                        <label for="houseNumber">Number of house and apartments:</label> <input type="text" id="houseNumber" class="form-control" pattern="^\d+[a-zA-Z]?(\/\d+[a-zA-Z]?)?$" required />
+                        <small data-warning='Valid data format is 00/00' data-accept='Thank you for entering number of your house and appartment!'>Data format: 00/00</small>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="postalCode">Postal code:</label>
+                        <input type="text" id="postalCode" class="form-control" pattern="^\d{2}-\d{3}$" title="00-000" placeholder="00-000" required />
+                        <small data-warning='Valid data format is 00-000.' data-accept='Thank you for entering your postal code!'>Data format: 00-000</small>
+                    </div>
+                    <div class="form-group col">
+                        <label for="city">City:</label>
+                        <input type="text" id="city" class="form-control" pattern="^[a-zA-ZęóąśżźćńŚŻŹĆŃ\s/-]{2,}$" required />
+                        <small data-warning='Please, enter valid city.' data-accept='Thank you for entering your city!'></small>
+                    </div>
+                    <div class="form-group col">
+                        <label for="country">Country:</label>
+                        <input type="text" id="country" class="form-control" pattern="^[a-zA-ZęóąśżźćńŚŻŹĆŃ\s/-]{2,}$" required />
+                        <small data-warning='Please, enter valid country.' data-accept='Thank you for entering your country!'></small>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h3>Contact</h3>
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="telephone">Telephone number:</label>
+                        <input type="tel" id="telephone" class="form-control" pattern="^\+\d{2}\s\d{3}\s\d{3}\s\d{3}$" required />
+                        <small data-warning='Valid data format is +48 000 000 000.' data-accept='Thank you for entering your telephone number!'>Data format: +48 000 000 000</small>
+                    </div>
+                    <div class="form-group col">
+                        <label for="email">Email address:</label>
+                        <input type="email" id="email" class="form-control" pattern="^[^@\s]+@\w+\.[^@\s]+" required />
+                        <small data-warning='Please, enter your valid email address.' data-accept='Thank you for entering your email!'></small>
+                    </div>
+                </div>
+            </section>
+
+            <section class="details">
+                <h3>Details and expectations:</h3>
+                <div class="row mb-3">
+                    <div class="form-group col">
+                        <label for="start">When do you want to start the trip?</label>
+                        <input type="date" id="start" class="form-control" required />
+                        <small data-warning='Please, choose date from in one week to the the end on this year.'
+                               data-warning2="Date of finishing trip must be later or the same as the date of beginning."
+                               data-accept='Thank you for entering date of trip beginning!'>
+                            Only this year possible.
+                        </small>
+                    </div>
+                    <div class="form-group col">
+                        <label for="end">When do you want to finish the trip?</label> <input type="date" id="end" class="form-control" required />
+                        <small data-warning='Please, choose date from in one week to the the end on this year.'
+                               data-warning2="Date of finishing trip must be later or the same as the date of beginning."
+                               data-accept='Thank you for entering date of trip fininishing!'>
+                            Only this year possible.
+                        </small>
+
+                    </div>
+                    <div class="form-group col">
+                        <label for="country">Select country you like to visit</label>
+                        <select id="country" class="form-control" required>
+                            <option>Norway</option>
+                            <option>Iceland</option>
+                            <option>Marocco</option>
+                            <option>Turkey</option>
+                            <option>Portugal</option>
+                            <option>Kirgistan</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <h5>Select the equipment you own:</h5>
+                        <small>Please, select at least one option</small>
+
+                        <div class="form-check"><input class="form-check-input" type="checkbox" name="equipment1" value="bicycle" id="bicycle" /><label for="bicycle" class="form-check-label">Trekking bike with trunk</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" name="equipment2" value="tent" id="tent" /><label for="tent" class="form-check-label">Tent</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" name="equipment3" value="slippingBag" id="slippingBag" /><label for="slippingBag" class="form-check-label">Slipping bag</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" name="equipment4" value="mattress" id="mattress" /><label for="mattress" class="form-check-label">Foam mattress</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" name="equipment5" value="stove" id="stove" /><label for="stove" class="form-check-label">Gas or fuel stove</label></div>
+                    </div>
+                    <div class="form-group col">
+                        <h5>Have you been earlier on a minimum one-week bike trip? </h5>
+                        <small>Please, select at least one option</small>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="haveYouBeen" value="never" id="never" /><label for="never" class="form-check-label">Never</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="haveYouBeen" value="once" id="once" /><label for="once" class="form-check-label">Once, ocasionally</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="haveYouBeen" value="often" id="often" /><label for="often" class="form-check-label">I've been a few times on such form of trip and I know that I like it.</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="haveYouBeen" value="always" id="always" /><label for="always" class="form-check-label">It's my preferable way of travelling and I go on a bike holiday every year.</label></div>
+                    </div>
+                </div>
+            </section>
+            <div class="text-center"><button type="submit">Submit your application!</button></div>
+        </form>
+    </main>
+</body>
+</html>
