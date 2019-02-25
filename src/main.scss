@@ -98,20 +98,24 @@ body {
                 }
             }
 
+            .fileName {
+                color: $green;
+            }
+
+
             small {
                 height: 1.1rem;
                 display: block;
                 line-height: 1.2em;
-                padding-left: 5px;
+                padding-left: 2px;
 
                 &.warning {
                     color: $red;
                 }
             }
 
-            h5 + small {
-                padding-left: 0;
-                padding-bottom: 2em;
+            .form-check:last-of-type {
+                margin-bottom: 0.5em;
             }
         }
 
@@ -120,6 +124,58 @@ body {
             border: none;
             background-color: $green;
             color: #fff;
+
+            &:hover {
+                background-color: lighten($green, 10%);
+            }
+
+            &[type=submit]:disabled {
+                background-color: lighten($green, 30%);
+            }
         }
+    }
+}
+
+.loading {
+    position:absolute;
+    height:100%;
+    width:100%;
+    content:'';
+    background-color: rgba(128, 128, 128, 0.5);
+
+    &::after {
+        display: inline-block;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        border: 10px solid #aaa;
+        border-top-color: $green;
+        content: '';
+        animation: spin 1s linear infinite;
+        -webkit-animation: spin 1s linear infinite;
+        -moz-animation: spin 1s linear infinite;
+        -ms-animation: spin 1s linear infinite;
+        -o-animation: spin 1s linear infinite;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+        -webkit-transform: translate(-50%, -50%) rotate(0deg);
+        -moz-transform: translate(-50%, -50%) rotate(0deg);
+        -ms-transform: translate(-50%, -50%) rotate(0deg);
+        -o-transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+        -webkit-transform: translate(-50%, -50%) rotate(360deg);
+        -moz-transform: translate(-50%, -50%) rotate(360deg);
+        -ms-transform: translate(-50%, -50%) rotate(360deg);
+        -o-transform: translate(-50%, -50%) rotate(360deg);
     }
 }

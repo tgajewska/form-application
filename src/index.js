@@ -1,40 +1,62 @@
 import 'bootstrap';
 import './main.scss';
 
-
-let inputs = document.querySelectorAll('input[required]', 'select[required]');
+const form = document.querySelector('#appForm');
+const inputs = document.querySelectorAll("input:not([type='checkbox']), select");
 
 function checkInput(inputs) {
     [...inputs].forEach(function (el) {
-
+        
         if ($(el).attr('id') == 'idCard') {
             el.addEventListener('click', function () {
                 this.addEventListener('change', function () {
-                    showAccept($(".file-upload-button"));                  
+                    if (this.checkValidity()) {
+                        showAccept($(".file-upload-button"));
+                        $('#fileName').text(this.files[0].name);
+                    }
+                                        
                 })
                 showWarning($(".file-upload-button"));
             })
         }
 
+        else if ($(el).attr('type') == 'radio') {
+            el.addEventListener('click', function () {
+                
+                showAccept($(this).parent().parent());
+
+            })
+        }
+
         else {
+
+
+
             el.addEventListener('blur', function () {
 
-                if ($(this).attr('id') == 'start' || $(this).attr('id') == 'end') {
-
-                    if (($(this).attr('id') == 'start' && $('#end').val().length > 0) || ($(this).attr('id') == 'end' && $('#start').val().length > 0)) {
-                        if ($('#start').val() >= $('#end').val()) {
-                            showWarning(this, $(this).next().data('warning2'));
-                        }
-                        else {
-                            const dateInputs = $('.details input[type=date]');
-                            console.log([...dateInputs]);
-                            [...dateInputs].forEach(function (el) { showAccept(el); })
-                        }
-                        return;
+                if ($(this).attr('id') == 'start') {
+                    $('#end').attr('min', $(this).val());
+                    if ($('#end').val() < $(this).val()) {
+                        $(this).attr('max', $('#end').val())
                     }
                 }
-                               
+
+                if ($(this).attr('id') == 'end') {
+                    $('#start').attr('max', $(this).val());
+                    if ($('#start').val() > $(this).val()) {
+                        $(this).attr('min', $('#start').val())
+                    }
+                }
+
+
+
                 if (!this.checkValidity()) {
+
+                    if ($(this).val() < $(this).attr('min')) {
+                        showWarning(this, $(this).next().data('warning2'));
+                        return;
+                    }
+
                     showWarning(this);
                 }
 
@@ -48,6 +70,7 @@ function checkInput(inputs) {
 }
 
 
+
 function showAccept(input) {
     const acceptText = $(input).next().data('accept');
     $(input).removeClass('warning').addClass('valid');
@@ -56,7 +79,7 @@ function showAccept(input) {
 
 function showWarning(input, text) {
     $(input).removeClass('valid').addClass('warning');
-        let warningText;
+    let warningText;
     if (text) {
         warningText = text;
     }
@@ -64,12 +87,13 @@ function showWarning(input, text) {
         warningText = $(input).next().data('warning');
     }
     $(input).next().text(warningText).addClass('warning');
+    return false;
 }
 
 
 
 
-var setDates = {
+const setDates = {
     today: function () { return new Date(); },
     year: function () { return this.today().getFullYear() },
     month: function () { return (this.today().getMonth() + 1).toString().length == 1 ? `0${this.today().getMonth() + 1}` : this.today().getMonth() + 1 },
@@ -99,13 +123,99 @@ var setDates = {
 }
 
 
+function loadCountriesCodes() {
+    fetch('https://restcountries.eu/rest/v2/all')
+        .then(response => { return response.json() })
+        .then(data => data.map(function (el) {
+            const option = document.createElement('option');
+            option.innerHTML = el.name;
+            country.appendChild(option);
+        }))
+        .catch(error => {
+            stopLoading();
+            output.innerHTML = `B³¹d: ${error}`;
+        }
+        )
+}
 
 
-$('#birthday').attr('max', setDates.setMaxBirthDateAdult());
-$("#start, #end").attr({
-    'min': setDates.setMinDate(),
-    'max': setDates.setMaxDate()
-});
 
-checkInput(inputs);
+function checkAllFields(inputs) {
+    
 
+    let fieldsAreValid = true;
+
+    [...inputs].forEach(el => {
+
+        if (el.checkValidity()) {
+            if ($(el).attr('id') == 'idCard') {
+                showAccept($(".file-upload-button"));
+            }
+            else {
+                showAccept(el);
+            }
+        }
+        else {
+            
+            if ($(el).attr('id') == 'idCard') {
+                showWarning($(".file-upload-button"));
+            }
+            else {
+                showWarning(el);
+            }
+            fieldsAreValid = false;
+        }
+    });
+
+    if ($("input[type='radio']:checked").length == 0) {
+        showWarning($('#experience'));
+        fieldsAreValid = false;
+    }
+
+
+    return fieldsAreValid;
+}
+
+function submitForm() {
+    form.addEventListener('submit', (el) => {
+        el.preventDefault();
+        if (checkAllFields(inputs)) {
+            $('#appForm [type=submit]').attr('disabled', true);
+            showAccept($('button[type=submit]'));
+            const elements = form.querySelectorAll("input[type='text']:not(:disabled), input[type='date']:not(:disabled), input[type='file']:not(:disabled), input[type='tel']:not(:disabled), input[type='email']:not(:disabled), input[type='checkbox']:checked:not(:disabled), input[type='radio']:checked:not(:disabled), select:not(:disabled)");
+            const dataToSend = new FormData;
+            [...elements].forEach(el => { dataToSend.append(el.name, el.value); });
+            sendData(dataToSend);
+        }
+        else {
+            showWarning($('button[type=submit]'));
+        }
+    })
+}
+
+function sendData(data) {
+    $('body').append("<div class='loading'></div>");
+    
+    for (let pair of data.entries()) {
+        
+        sessionStorage.setItem(pair[0], pair[1]);
+    }
+    console.log(sessionStorage);
+}
+
+$(function () {
+    form.reset();
+
+    $('#birthday').attr('max', setDates.setMaxBirthDateAdult());
+
+
+    $("#start, #end").attr({
+        'min': setDates.setMinDate(),
+        'max': setDates.setMaxDate()
+    });
+
+
+    loadCountriesCodes();
+    checkInput(inputs);
+    submitForm();
+})
